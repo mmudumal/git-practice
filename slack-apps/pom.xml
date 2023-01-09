@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <parent>
+      <groupId>com.oracle.se.gateway</groupId>
+      <artifactId>rpm-only</artifactId>
+      <version>1.0.0</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>oracle.acs.platform</groupId>
+   <artifactId>slack-apps</artifactId>
+   <version>1.0.0</version>
+   <packaging>rpm</packaging>
+   <name>ACS::SLACK Applications bundle:: Linux Package</name>
+   <description>SLACK Applications bundle RPM</description>
+   <properties>
+      <install.script.dir>/opt/slack-app</install.script.dir>
+      <install.log.dir>/var/opt/slack-app</install.log.dir>
+   </properties>
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>rpm-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+               <name>${rpmName}</name>
+               <version>${rpmVersion}</version>
+               <release>${BUILD_NUMBER}</release>
+               <copyright>2021 Oracle</copyright>
+               <group>Applications/System</group>
+               <packager>ACS</packager>
+               <vendor>Oracle</vendor>
+               <defineStatements>
+                  <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
+               </defineStatements>
+               <mappings>
+                  <mapping>
+                     <directory>${install.script.dir}</directory>
+                     <filemode>0755</filemode>
+                     <username>root</username>
+                     <groupname>root</groupname>
+                     <sources>
+                        <source>
+                           <location>slack-appss/integration</location>
+                        </source>
+                     </sources>
+                  </mapping>
+               </mappings>
+               <obsoletes>
+                  <obsolete>slack-apps</obsolete>
+               </obsoletes>
+               <provides>
+                  <provide>slack-apps</provide>
+               </provides>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+</project>
